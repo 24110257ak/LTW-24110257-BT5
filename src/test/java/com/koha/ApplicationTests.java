@@ -97,5 +97,36 @@ class ApplicationTests {
         mockMvc.perform(get("/home"))
                 .andExpect(status().isOk());
     }
+
+    @Test
+    void testProductList() throws Exception {
+        mockMvc.perform(get("/product"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void testProductsEndpoint() throws Exception {
+        mockMvc.perform(get("/products"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void testProductDetail() throws Exception {
+        mockMvc.perform(get("/product/detail").param("id", "10"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void testAdminProducts() throws Exception {
+        mockMvc.perform(get("/admin/products"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void testAdminProductAdd() throws Exception {
+        mockMvc.perform(get("/admin/product/add"))
+                .andExpect(status().isOk());
+    }
 }
+
 

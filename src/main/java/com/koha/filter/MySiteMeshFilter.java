@@ -99,6 +99,8 @@ public class MySiteMeshFilter extends ConfigurableSiteMeshFilter {
                .addDecoratorPath("/home", "/decorators/web.jsp")
                .addDecoratorPath("/product", "/decorators/web.jsp")
                .addDecoratorPath("/product/*", "/decorators/web.jsp")
+               .addDecoratorPath("/products", "/decorators/web.jsp")
+               .addDecoratorPath("/products/*", "/decorators/web.jsp")
                .addDecoratorPath("/profile", "/decorators/web.jsp")
                .addDecoratorPath("/user/*", "/decorators/web.jsp")
                .addDecoratorPath("/login", "/decorators/web.jsp")
