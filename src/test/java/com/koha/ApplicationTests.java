@@ -91,5 +91,11 @@ class ApplicationTests {
         mockMvc.perform(get("/admin/users"))
                 .andExpect(status().isOk());
     }
+
+    @Test
+    void testHome() throws Exception {
+        mockMvc.perform(get("/home"))
+                .andExpect(status().isOk());
+    }
 }
 

@@ -95,6 +95,7 @@ public class MySiteMeshFilter extends ConfigurableSiteMeshFilter {
         // Cấu hình đường dẫn decorator bao bọc toàn bộ hệ thống Bài tập 03 và 05
         builder.addDecoratorPath("/admin/*", "/decorators/admin.jsp")
                .addDecoratorPath("/admin/**", "/decorators/admin.jsp")
+               .addDecoratorPath("/", "/decorators/web.jsp")
                .addDecoratorPath("/home", "/decorators/web.jsp")
                .addDecoratorPath("/product", "/decorators/web.jsp")
                .addDecoratorPath("/product/*", "/decorators/web.jsp")
