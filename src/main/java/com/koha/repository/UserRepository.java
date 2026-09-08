@@ -29,3 +29,4 @@ public interface UserRepository extends JpaRepository<User, Integer> {
            "ORDER BY u.id DESC")
     List<User> searchByKeyword(@Param("keyword") String keyword);
 }
+

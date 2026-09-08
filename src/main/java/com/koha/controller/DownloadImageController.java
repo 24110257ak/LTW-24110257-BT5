@@ -12,6 +12,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import com.koha.util.Constant;
 
+@WebServlet(urlPatterns = {"/image"})
 // @WebServlet(urlPatterns = {"/image"}) - Đã được thay thế bởi Spring MVC ImageController
 public class DownloadImageController extends HttpServlet {
 

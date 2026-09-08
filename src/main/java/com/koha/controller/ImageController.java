@@ -64,3 +64,4 @@ public class ImageController {
         response.getWriter().write(defaultSvg);
     }
 }
+

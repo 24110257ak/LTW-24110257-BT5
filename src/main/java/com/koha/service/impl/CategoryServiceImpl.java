@@ -64,6 +64,7 @@ public class CategoryServiceImpl implements ICategoryService {
     public void insert(Category category) {
         Category cate = this.findByCategoryname(category.getCategoryname());
         if (cate == null) {
+            cateDao.insert(category);
             if (categoryRepository != null) {
                 categoryRepository.save(category);
             } else {
@@ -86,6 +87,7 @@ public class CategoryServiceImpl implements ICategoryService {
                     }
                 }
             }
+            cateDao.update(category);
             if (categoryRepository != null) {
                 categoryRepository.save(category);
             } else {
@@ -107,6 +109,7 @@ public class CategoryServiceImpl implements ICategoryService {
                     }
                 }
             }
+            cateDao.delete(id);
             if (categoryRepository != null) {
                 categoryRepository.deleteById(id);
             } else {
@@ -151,3 +154,4 @@ public class CategoryServiceImpl implements ICategoryService {
         return null;
     }
 }
+
