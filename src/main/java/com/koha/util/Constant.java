@@ -4,8 +4,6 @@ import java.io.File;
 
 public class Constant {
 
-    // Thư mục lưu trữ upload nằm bên trong workspace bt2 + 3 + 4(27-8-2026-6-9-2026)
-    public static final String DIR = System.getProperty("upload.dir", "d:/lap_trinh_web/bt2 + 3 + 4(27-8-2026-6-9-2026)/uploads");
     // Thư mục lưu trữ upload nằm bên trong workspace bt5(8-9-2026 - 10-9-2026)
     public static final String DIR = System.getProperty("upload.dir", "d:/lap_trinh_web/bt5(8-9-2026 - 10-9-2026)/uploads");
     public static final String CATEGORY_UPLOAD_DIR = DIR + "/category";

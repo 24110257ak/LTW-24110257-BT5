@@ -37,7 +37,6 @@ public class UserServiceImpl implements IUserService {
     @Override
     @Transactional(readOnly = true)
     public User login(String username, String password) {
-        User user = userDao.findByUsername(username);
         User user = findByUsername(username);
         if (user != null && user.getPassword() != null && user.getPassword().equals(password)) {
             return user;
@@ -47,7 +46,6 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public boolean register(String username, String password, String fullname, String email, String phone) {
-        if (userDao.checkExistUsername(username) || (email != null && userDao.checkExistEmail(email))) {
         if (checkExistUsername(username) || (email != null && checkExistEmail(email))) {
             return false;
         }
@@ -58,23 +56,19 @@ public class UserServiceImpl implements IUserService {
         user.setEmail(email);
         user.setPhone(phone);
         user.setRoleid(2);
-        user.setStatus(1); // Mặc định kích hoạt nếu không dùng OTP
-        userDao.insert(user);
+        user.setStatus(1);
         insert(user);
         return true;
     }
 
     @Override
     public boolean registerWithOtp(String username, String password, String fullname, String email, String phone) {
-        if (userDao.checkExistUsername(username) || (email != null && userDao.checkExistEmail(email))) {
         if (checkExistUsername(username) || (email != null && checkExistEmail(email))) {
             return false;
         }
 
-        // 1. Sinh mã OTP ngẫu nhiên 6 chữ số
         String otp = String.format("%06d", new Random().nextInt(999999));
 
-        // 2. Tạo đối tượng User với trạng thái chưa kích hoạt (status = 0) và lưu mã OTP vào cột code
         User user = new User();
         user.setUsername(username);
         user.setPassword(password);
@@ -82,13 +76,11 @@ public class UserServiceImpl implements IUserService {
         user.setEmail(email);
         user.setPhone(phone);
         user.setRoleid(2);
-        user.setStatus(0); // 0: Chưa kích hoạt
-        user.setCode(otp); // Lưu mã OTP
+        user.setStatus(0);
+        user.setCode(otp);
 
-        userDao.insert(user);
         insert(user);
 
-        // 3. Gửi email chứa mã OTP kích hoạt tài khoản
         if (email != null && !email.trim().isEmpty()) {
             EmailUtil.sendOtpEmail(email.trim(), otp, "kích hoạt tài khoản");
         }
@@ -101,12 +93,10 @@ public class UserServiceImpl implements IUserService {
         if (username == null || otp == null) {
             return false;
         }
-        User user = userDao.findByUsername(username.trim());
         User user = findByUsername(username.trim());
         if (user != null && user.getCode() != null && user.getCode().trim().equals(otp.trim())) {
-            user.setStatus(1); // Kích hoạt tài khoản thành công
-            user.setCode(null); // Xóa OTP đã sử dụng
-            userDao.update(user);
+            user.setStatus(1);
+            user.setCode(null);
             update(user);
             return true;
         }
@@ -118,12 +108,10 @@ public class UserServiceImpl implements IUserService {
         if (username == null) {
             return false;
         }
-        User user = userDao.findByUsername(username.trim());
         User user = findByUsername(username.trim());
         if (user != null && user.getEmail() != null) {
             String newOtp = String.format("%06d", new Random().nextInt(999999));
             user.setCode(newOtp);
-            userDao.update(user);
             update(user);
             EmailUtil.sendOtpEmail(user.getEmail(), newOtp, "kích hoạt tài khoản (gửi lại)");
             return true;
@@ -137,17 +125,14 @@ public class UserServiceImpl implements IUserService {
             return false;
         }
         account = account.trim();
-        User user = userDao.findByUsername(account);
         User user = findByUsername(account);
         if (user == null) {
-            user = userDao.findByEmail(account);
             user = findByEmail(account);
         }
 
         if (user != null && user.getEmail() != null && !user.getEmail().trim().isEmpty()) {
             String otp = String.format("%06d", new Random().nextInt(999999));
             user.setCode(otp);
-            userDao.update(user);
             update(user);
             EmailUtil.sendOtpEmail(user.getEmail(), otp, "đặt lại mật khẩu");
             return true;
@@ -161,17 +146,14 @@ public class UserServiceImpl implements IUserService {
             return false;
         }
         account = account.trim();
-        User user = userDao.findByUsername(account);
         User user = findByUsername(account);
         if (user == null) {
-            user = userDao.findByEmail(account);
             user = findByEmail(account);
         }
 
         if (user != null && user.getCode() != null && user.getCode().trim().equals(otp.trim())) {
             user.setPassword(newPassword);
-            user.setCode(null); // Xóa mã OTP
-            userDao.update(user);
+            user.setCode(null);
             update(user);
             return true;
         }
@@ -225,7 +207,6 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public void insert(User user) {
-        userDao.insert(user);
         if (userRepository != null) {
             userRepository.save(user);
         } else {
@@ -235,7 +216,6 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public void update(User user) {
-        userDao.update(user);
         if (userRepository != null) {
             userRepository.save(user);
         } else {
@@ -247,7 +227,6 @@ public class UserServiceImpl implements IUserService {
     public void delete(int id) throws Exception {
         User user = findById(id);
         if (user != null) {
-            // Xóa ảnh đại diện vật lý nếu có và không phải link web
             String oldImg = user.getImages();
             if (oldImg != null && !oldImg.startsWith("http")) {
                 File file = new File(Constant.DIR + "/" + oldImg);
@@ -265,7 +244,6 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public boolean updateProfile(int id, String fullname, String phone, String images) {
-        User user = userDao.findById(id);
         User user = findById(id);
         if (user != null) {
             if (fullname != null && !fullname.trim().isEmpty()) {
@@ -277,7 +255,6 @@ public class UserServiceImpl implements IUserService {
             if (images != null && !images.trim().isEmpty()) {
                 user.setImages(images.trim());
             }
-            userDao.update(user);
             update(user);
             return true;
         }
@@ -302,7 +279,6 @@ public class UserServiceImpl implements IUserService {
         if (userRepository != null) {
             return userRepository.searchByKeyword(keyword.trim());
         }
-        // Fallback filter
         String kw = keyword.trim().toLowerCase();
         return userDao.findAll().stream()
                 .filter(u -> (u.getUsername() != null && u.getUsername().toLowerCase().contains(kw))

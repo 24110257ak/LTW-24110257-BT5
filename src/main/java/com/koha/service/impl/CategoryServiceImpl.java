@@ -2,7 +2,6 @@ package com.koha.service.impl;
 
 import java.io.File;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -64,7 +63,6 @@ public class CategoryServiceImpl implements ICategoryService {
     public void insert(Category category) {
         Category cate = this.findByCategoryname(category.getCategoryname());
         if (cate == null) {
-            cateDao.insert(category);
             if (categoryRepository != null) {
                 categoryRepository.save(category);
             } else {
@@ -77,7 +75,6 @@ public class CategoryServiceImpl implements ICategoryService {
     public void update(Category category) {
         Category cate = this.findById(category.getCategoryId());
         if (cate != null) {
-            // Xóa file ảnh cũ nếu có ảnh mới upload
             if (category.getImages() != null && !category.getImages().equals(cate.getImages())) {
                 String oldImage = cate.getImages();
                 if (oldImage != null && !oldImage.startsWith("http")) {
@@ -87,7 +84,6 @@ public class CategoryServiceImpl implements ICategoryService {
                     }
                 }
             }
-            cateDao.update(category);
             if (categoryRepository != null) {
                 categoryRepository.save(category);
             } else {
@@ -109,7 +105,6 @@ public class CategoryServiceImpl implements ICategoryService {
                     }
                 }
             }
-            cateDao.delete(id);
             if (categoryRepository != null) {
                 categoryRepository.deleteById(id);
             } else {
@@ -154,4 +149,3 @@ public class CategoryServiceImpl implements ICategoryService {
         return null;
     }
 }
-
