@@ -1,0 +1,25 @@
+# Target and build directories
+target/
+**/target/
+
+# IDE and Editor files
+.settings/
+**/.settings/
+.classpath
+**/.classpath
+.project
+**/.project
+.vscode/
+**/.vscode/
+.idea/
+**/.idea/
+*.iml
+
+# OS and temporary files
+.DS_Store
+Thumbs.db
+*.log
+
+# Upload directory inside workspace
+uploads/
+**/uploads/

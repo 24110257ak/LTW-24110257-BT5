@@ -1,0 +1,16 @@
+<sitemesh>
+    <decorator-prefix></decorator-prefix>
+    <mapping path="/admin/*" decorator="/decorators/admin.jsp"/>
+    <mapping path="/home" decorator="/decorators/web.jsp"/>
+    <mapping path="/product" decorator="/decorators/web.jsp"/>
+    <mapping path="/product/*" decorator="/decorators/web.jsp"/>
+    <mapping path="/profile" decorator="/decorators/web.jsp"/>
+    <mapping path="/user/*" decorator="/decorators/web.jsp"/>
+    <mapping path="/login" decorator="/decorators/web.jsp"/>
+    <mapping path="/register" decorator="/decorators/web.jsp"/>
+    <mapping path="/verify-otp" decorator="/decorators/web.jsp"/>
+    <mapping path="/forgot-password" decorator="/decorators/web.jsp"/>
+    <mapping path="/reset-password" decorator="/decorators/web.jsp"/>
+    <mapping path="/image" exclude="true"/>
+    <mapping path="/image/*" exclude="true"/>
+</sitemesh>
