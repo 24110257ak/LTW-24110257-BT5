@@ -45,6 +45,11 @@ public class MySiteMeshFilter extends ConfigurableSiteMeshFilter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
             throws IOException, ServletException {
+        // Luôn đảm bảo mã hóa UTF-8 cho cả Request và Response
+        servletRequest.setCharacterEncoding("UTF-8");
+        servletResponse.setCharacterEncoding("UTF-8");
+        servletResponse.setContentType("text/html; charset=UTF-8");
+
         HttpServletRequest req = (HttpServletRequest) servletRequest;
 
         // Bọc request để chuyển đổi forward -> include trong các Controller
@@ -59,6 +64,9 @@ public class MySiteMeshFilter extends ConfigurableSiteMeshFilter {
                     @Override
                     public void forward(ServletRequest request, ServletResponse response)
                             throws ServletException, IOException {
+                        request.setCharacterEncoding("UTF-8");
+                        response.setCharacterEncoding("UTF-8");
+                        response.setContentType("text/html; charset=UTF-8");
                         // Dùng include thay vì forward để Tomcat 11 không commit và đóng luồng response sớm
                         rd.include(request, response);
                     }
@@ -66,6 +74,9 @@ public class MySiteMeshFilter extends ConfigurableSiteMeshFilter {
                     @Override
                     public void include(ServletRequest request, ServletResponse response)
                             throws ServletException, IOException {
+                        request.setCharacterEncoding("UTF-8");
+                        response.setCharacterEncoding("UTF-8");
+                        response.setContentType("text/html; charset=UTF-8");
                         rd.include(request, response);
                     }
                 };
@@ -81,7 +92,9 @@ public class MySiteMeshFilter extends ConfigurableSiteMeshFilter {
         builder.setDecoratorPrefix("");
 
         // Cấu hình đường dẫn decorator bao bọc toàn bộ hệ thống Bài tập 03
+        // Cấu hình đường dẫn decorator bao bọc toàn bộ hệ thống Bài tập 03 và 05
         builder.addDecoratorPath("/admin/*", "/decorators/admin.jsp")
+               .addDecoratorPath("/admin/**", "/decorators/admin.jsp")
                .addDecoratorPath("/home", "/decorators/web.jsp")
                .addDecoratorPath("/product", "/decorators/web.jsp")
                .addDecoratorPath("/product/*", "/decorators/web.jsp")
@@ -93,7 +106,10 @@ public class MySiteMeshFilter extends ConfigurableSiteMeshFilter {
                .addDecoratorPath("/forgot-password", "/decorators/web.jsp")
                .addDecoratorPath("/reset-password", "/decorators/web.jsp")
                .addExcludedPath("/image")
-               .addExcludedPath("/image/*");
+               .addExcludedPath("/image/*")
+               .addExcludedPath("/uploads/**")
+               .addExcludedPath("/static/**")
+               .addExcludedPath("/assets/**");
     }
 
     @Override
@@ -128,6 +144,8 @@ public class MySiteMeshFilter extends ConfigurableSiteMeshFilter {
             @Override
             protected boolean postProcess(String contentType, CharBuffer buffer, HttpServletRequest request,
                     HttpServletResponse response, ResponseMetaData metaData) throws IOException, ServletException {
+                response.setCharacterEncoding("UTF-8");
+                response.setContentType("text/html; charset=UTF-8");
                 boolean result = super.postProcess(contentType, buffer, request, response, metaData);
                 try {
                     // Đảm bảo flush toàn bộ buffer ra client
@@ -147,6 +165,9 @@ public class MySiteMeshFilter extends ConfigurableSiteMeshFilter {
                     @Override
                     protected void dispatch(HttpServletRequest req, HttpServletResponse res, String path)
                             throws ServletException, IOException {
+                        req.setCharacterEncoding("UTF-8");
+                        res.setCharacterEncoding("UTF-8");
+                        res.setContentType("text/html; charset=UTF-8");
                         String targetPath = path;
 
                         // Xử lý loại bỏ nhân đôi prefix nếu có

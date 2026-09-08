@@ -18,8 +18,17 @@ import com.koha.repository.UserRepository;
 import com.koha.service.ICategoryService;
 import com.koha.service.IUserService;
 
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.test.web.servlet.MockMvc;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 @SpringBootTest
+@AutoConfigureMockMvc
 class ApplicationTests {
+
+    @Autowired
+    private MockMvc mockMvc;
 
     @Autowired
     private CategoryController categoryController;
@@ -69,6 +78,18 @@ class ApplicationTests {
         // Test Search
         List<User> searchResults = userRepository.searchByKeyword("admin");
         assertNotNull(searchResults);
+    }
+
+    @Test
+    void testAdminCategories() throws Exception {
+        mockMvc.perform(get("/admin/categories"))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    void testAdminUsers() throws Exception {
+        mockMvc.perform(get("/admin/users"))
+                .andExpect(status().isOk());
     }
 }
 

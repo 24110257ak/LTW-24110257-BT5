@@ -18,7 +18,12 @@ public class Application extends SpringBootServletInitializer {
         return application.sources(Application.class);
     }
 
+    static {
+        System.setProperty("file.encoding", "UTF-8");
+    }
+
     public static void main(String[] args) {
+        System.setProperty("file.encoding", "UTF-8");
         SpringApplication.run(Application.class, args);
     }
 }
