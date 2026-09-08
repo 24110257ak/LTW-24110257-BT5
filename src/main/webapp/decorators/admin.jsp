@@ -47,6 +47,11 @@
                         </a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link" href="<c:url value='/admin/users'/>">
+                            <i class="fa-solid fa-users me-1"></i>Người dùng
+                        </a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link text-info" href="<c:url value='/home'/>">
                             <i class="fa-solid fa-arrow-up-right-from-square me-1"></i>Về Trang Khách
                         </a>

@@ -69,6 +69,11 @@
                                         <i class="fa-solid fa-layer-group me-2"></i>Quản lý danh mục
                                     </a>
                                 </li>
+                                <li>
+                                    <a class="dropdown-item" href="<c:url value='/admin/users'/>">
+                                        <i class="fa-solid fa-users me-2"></i>Quản lý người dùng
+                                    </a>
+                                </li>
                             </ul>
                         </li>
                     </c:if>

@@ -21,7 +21,6 @@ import com.koha.util.Constant;
 @Transactional
 public class ProductServiceImpl implements IProductService {
 
-    @Autowired
     @Autowired(required = false)
     private ProductRepository productRepository;
 
@@ -36,7 +35,6 @@ public class ProductServiceImpl implements IProductService {
 
     @Override
     public void insert(Product product) {
-        productRepository.save(product);
         if (productRepository != null) {
             productRepository.save(product);
         } else {
@@ -48,7 +46,6 @@ public class ProductServiceImpl implements IProductService {
     public void update(Product product) {
         Product oldProduct = findById(product.getProductId());
         if (oldProduct != null) {
-            // Nếu có ảnh mới và ảnh cũ là file lưu trên ổ đĩa thì xóa ảnh cũ
             if (product.getImages() != null && !product.getImages().equals(oldProduct.getImages())) {
                 String oldImage = oldProduct.getImages();
                 if (oldImage != null && !oldImage.startsWith("http") && !oldImage.equals(Constant.DEFAULT_FILENAME)) {
@@ -58,7 +55,6 @@ public class ProductServiceImpl implements IProductService {
                     }
                 }
             }
-            productRepository.save(product);
             if (productRepository != null) {
                 productRepository.save(product);
             } else {
@@ -78,7 +74,6 @@ public class ProductServiceImpl implements IProductService {
                     oldFile.delete();
                 }
             }
-            productRepository.deleteById(productId);
             if (productRepository != null) {
                 productRepository.deleteById(productId);
             } else {
@@ -90,7 +85,6 @@ public class ProductServiceImpl implements IProductService {
     @Override
     @Transactional(readOnly = true)
     public Product findById(int productId) {
-        return productRepository.findById(productId).orElse(null);
         if (productRepository != null) {
             return productRepository.findById(productId).orElse(null);
         }
@@ -100,7 +94,6 @@ public class ProductServiceImpl implements IProductService {
     @Override
     @Transactional(readOnly = true)
     public List<Product> findAll() {
-        return productRepository.findAll();
         if (productRepository != null) {
             return productRepository.findAll();
         }
@@ -110,7 +103,6 @@ public class ProductServiceImpl implements IProductService {
     @Override
     @Transactional(readOnly = true)
     public List<Product> searchByName(String productName) {
-        return productRepository.searchByName(productName);
         if (productRepository != null) {
             return productRepository.searchByName(productName);
         }
@@ -120,7 +112,6 @@ public class ProductServiceImpl implements IProductService {
     @Override
     @Transactional(readOnly = true)
     public List<Product> findTop10() {
-        return productRepository.findTop10ByOrderByProductIdDesc();
         if (productRepository != null) {
             return productRepository.findTop10ByOrderByProductIdDesc();
         }
@@ -130,7 +121,6 @@ public class ProductServiceImpl implements IProductService {
     @Override
     @Transactional(readOnly = true)
     public List<Product> findAll(int page, int pageSize) {
-        return productRepository.findAllByOrderByProductIdDesc(PageRequest.of(page, pageSize)).getContent();
         if (productRepository != null) {
             return productRepository.findAllByOrderByProductIdDesc(PageRequest.of(page, pageSize)).getContent();
         }
@@ -140,7 +130,6 @@ public class ProductServiceImpl implements IProductService {
     @Override
     @Transactional(readOnly = true)
     public int count() {
-        return (int) productRepository.count();
         if (productRepository != null) {
             return (int) productRepository.count();
         }
@@ -150,11 +139,9 @@ public class ProductServiceImpl implements IProductService {
     @Override
     @Transactional(readOnly = true)
     public List<Product> findByCategoryId(int categoryId) {
-        return productRepository.findByCategory_CategoryId(categoryId);
         if (productRepository != null) {
             return productRepository.findByCategory_CategoryId(categoryId);
         }
         return productDao.findByCategoryId(categoryId);
     }
 }
-
