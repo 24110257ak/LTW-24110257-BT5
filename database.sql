@@ -26,9 +26,9 @@ BEGIN
     );
 
     INSERT INTO users (username, password, fullname, email, phone, roleid, status, code, images) VALUES 
-    (N'admin', N'123', N'Quản Trị Viên', N'admin@iotstar.vn', N'0908888999', 1, 1, NULL, N'https://cdn-icons-png.flaticon.com/512/3135/3135715.png'),
+    (N'admin', N'123456', N'Quản Trị Viên', N'admin@iotstar.vn', N'0908888999', 1, 1, NULL, N'https://cdn-icons-png.flaticon.com/512/3135/3135715.png'),
     (N'user1', N'123456', N'Nguyễn Văn A', N'vana@gmail.com', N'0912345678', 2, 1, NULL, N'https://cdn-icons-png.flaticon.com/512/3135/3135715.png'),
-    (N'trungnh', N'123', N'ThS. Nguyễn Hữu Trung', N'trungnh@hcmute.edu.vn', N'0908617108', 1, 1, NULL, N'https://cdn-icons-png.flaticon.com/512/3135/3135715.png');
+    (N'trungnh', N'123456', N'ThS. Nguyễn Hữu Trung', N'trungnh@hcmute.edu.vn', N'0908617108', 1, 1, NULL, N'https://cdn-icons-png.flaticon.com/512/3135/3135715.png');
 END
 ELSE
 BEGIN
@@ -47,6 +47,9 @@ BEGIN
         ALTER TABLE users ADD images NVARCHAR(500) NULL;
         EXEC('UPDATE users SET images = ''https://cdn-icons-png.flaticon.com/512/3135/3135715.png'' WHERE images IS NULL');
     END
+
+    -- Đồng bộ mật khẩu tối thiểu 6 ký tự cho các tài khoản mẫu cũ (123 -> 123456)
+    UPDATE users SET password = N'123456' WHERE password = N'123' OR LEN(password) < 6;
 END
 GO
 

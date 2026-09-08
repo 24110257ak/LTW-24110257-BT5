@@ -133,8 +133,8 @@ bt5(8-9-2026 - 10-9-2026)/
 * **Quản lý Sản phẩm (Admin)**: [http://localhost:8080/admin/products](http://localhost:8080/admin/products)
 
 ### 🔑 Tài khoản thử nghiệm có sẵn:
-| Vai trò | Tên đăng nhập | Mật khẩu | Ghi chú |
+| Vai trò | Tên đăng nhập | Mật khẩu (tối thiểu 6 ký tự) | Ghi chú |
 | :--- | :--- | :--- | :--- |
-| **Admin** | `admin` | `123` | Toàn quyền quản trị hệ thống |
-| **Admin** | `trungnh` | `123` | Giảng viên ThS. Nguyễn Hữu Trung |
+| **Admin** | `admin` | `123456` | Toàn quyền quản trị hệ thống |
+| **Admin** | `trungnh` | `123456` | Giảng viên ThS. Nguyễn Hữu Trung |
 | **User** | `user1` | `123456` | Tài khoản người dùng mẫu |

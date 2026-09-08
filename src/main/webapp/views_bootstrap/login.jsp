@@ -53,9 +53,9 @@
 
         <div class="mt-4 pt-3 border-top text-center">
             <div class="bg-light p-2 rounded small text-start mb-2">
-                <span class="fw-bold text-secondary">Tài khoản demo:</span><br>
-                • <code>admin</code> / <code>123</code> (Admin)<br>
-                • <code>trungnh</code> / <code>123</code> (Admin)<br>
+                <span class="fw-bold text-secondary">Tài khoản demo (Mật khẩu &ge; 6 ký tự):</span><br>
+                • <code>admin</code> / <code>123456</code> (Admin)<br>
+                • <code>trungnh</code> / <code>123456</code> (Admin)<br>
                 • <code>user1</code> / <code>123456</code> (User)
             </div>
             <a href="${pageContext.request.contextPath}/home" class="text-decoration-none small text-muted"><i class="fa-solid fa-house me-1"></i> Về trang chủ</a>
